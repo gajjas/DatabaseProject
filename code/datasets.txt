@@ -1,1 +1,2 @@
-https://data.ny.gov/api/views/3cij-nwhw/rows.csv?accessType=DOWNLOAD&sorting=true
+https://data.ny.gov/api/views/shc7-xcbw/rows.json?accessType=DOWNLOAD&sorting=true
+https://health.data.ny.gov/api/views/e9uj-s3sf/rows.json?accessType=DOWNLOAD
