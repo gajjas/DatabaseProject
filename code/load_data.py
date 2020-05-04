@@ -1,5 +1,6 @@
 import psycopg2
 import json
+from psycopg2.extras import execute_values
 
 connection_string = "host='localhost' dbname='dbms_final_project' user='dbms_project_user' password='dbms_password'"
 
@@ -83,7 +84,15 @@ def loadPopulationData():
 
 def main():
     # TODO invoke your code to load the data into the database   
-    print(loadEmploymentData()[0])
+    # d = loadEmploymentData()
+
+    with psycopg2.connect(connection_string) as conn:
+        with conn.cursor() as cursor:
+            with open('datasets/rows.json') as f:
+                data = [tuple(r[8:17]) for r in json.load(f)['data']]
+            insert_query = 'INSERT INTO Employment (areaType, area, NAICS, NAICSTitle, year, Establishments, averageEmployment, totalWage, annualAverageSalary) values %s';
+            execute_values (cursor, insert_query, data, template=None, page_size=100)
+            conn.commit()
 
 if __name__ == "__main__":
     main()

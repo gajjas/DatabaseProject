@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS Employment(
+DROP TABLE IF EXISTS Employment;
+CREATE TABLE Employment(
     areaType VARCHAR(127),
     area VARCHAR(127),
     NAICS INT,
@@ -10,7 +11,8 @@ CREATE TABLE IF NOT EXISTS Employment(
     annualAverageSalary BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS Population(
+DROP TABLE IF EXISTS Population;
+CREATE TABLE Population(
 	year INT,
 	ageGroupCode INT,
 	ageGroupDescription VARCHAR(127),
