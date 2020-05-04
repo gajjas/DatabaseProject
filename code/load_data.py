@@ -86,12 +86,19 @@ def main():
     # TODO invoke your code to load the data into the database   
     # d = loadEmploymentData()
 
+    datasets = [
+        ('rows.json', 8, 17, 'Employment (areaType, area, NAICS, NAICSTitle, year, Establishments, averageEmployment, totalWage, annualAverageSalary)'),
+        ('rows (1).json', 8, 18, 'Population (year, ageGroupCode, ageGroupDescription, genderCode, genderDescription, raceCode, raceDescription, countyCode, countyName, population)')
+    ]
+
     with psycopg2.connect(connection_string) as conn:
         with conn.cursor() as cursor:
-            with open('datasets/rows.json') as f:
-                data = [tuple(r[8:17]) for r in json.load(f)['data']]
-            insert_query = 'INSERT INTO Employment (areaType, area, NAICS, NAICSTitle, year, Establishments, averageEmployment, totalWage, annualAverageSalary) values %s';
-            execute_values (cursor, insert_query, data, template=None, page_size=100)
+            for (filename, minCol, maxCol, schema) in datasets:
+                with open('datasets/' + filename) as f:
+                    data = [tuple(r[minCol:maxCol]) for r in json.load(f)['data']]
+                insert_query = f"INSERT INTO {schema} values %s";
+                execute_values (cursor, insert_query, data, template=None, page_size=100)
+
             conn.commit()
 
 if __name__ == "__main__":
