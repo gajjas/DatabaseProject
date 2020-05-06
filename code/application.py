@@ -128,16 +128,16 @@ def main():
       parameter_inputs = {}
       for parameter in option_parameters:
         parameter_name, parameter_parser = parameter
-        parameter_name = parameter_name.replace("_", " ")
+        param_name = parameter_name.replace("_", " ")
         while True: 
-          parameter_input = input(f"Please enter the {parameter_name}: ").strip()
+          parameter_input = input(f"Please enter the {param_name}: ").strip()
 
           try:
             # Parse parameter and validate input
             parameter_input = parameter_parser(parameter_input)
           except ValueError as e:
             # Invalid format for input
-            print(f"ERROR: {parameter_name} must be {str(e)}")
+            print(f"ERROR: {param_name} must be {str(e)}")
           else:
             # Store parsed value
             parameter_inputs[parameter_name] = parameter_input
