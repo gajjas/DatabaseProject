@@ -61,8 +61,8 @@ def insertEmploymentData(employmentData):
             cursor.execute(insertQuery, row)
             print("Inserted Data: ", row)
             
-        conn.commit()
-        print("Insert Committed")
+    conn.commit()
+    print("Insert Committed")
     print("\n\nFinished Inserting Employment Data", end="\n\n")
         
 
@@ -91,8 +91,8 @@ def insertPopulationData(populationData):
             cursor.execute(insertQuery, row)
             print("Inserted Data: ", row)
             
-        conn.commit()
-        print("Insert Committed")
+    conn.commit()
+    print("Insert Committed")
     print("\n\nFinished Inserting Population Data", end="\n\n")
 
 # Returns a dictionary of the data cutting out the unimportant
