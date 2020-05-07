@@ -10,7 +10,7 @@ class Queries:
     def populationChange(self, county_name, start_year, end_year):
         #this query takes a county_name and 2 years and return the difference in population between the 2 years. Make sure to check that the users are entering valid years and county_name names.
         cursor = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        query = "SELECT Population.population - pop2.population from \
+        query = "SELECT pop2.population - Population.population from \
             Population inner join Population as pop2 on Population.countyName = pop2.countyName where upper(Population.countyName) \
                 like upper(%s) and Population.year = %s and pop2.year = %s and Population.ageGroupCode = %s and pop2.ageGroupCode = %s \
                     and Population.genderCode = %s and pop2.genderCode = %s and Population.raceCode = %s and pop2.raceCode = %s"
@@ -22,7 +22,7 @@ class Queries:
         #this query takes a county_name and 2 years and returns the difference in avgEmployment between the 2 years. Make sure to check that users are entering a valid county_name name and valid years.
         cursor = self.conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         county_name = county_name.strip() + " County"
-        cursor.execute("SELECT Employment.averageEmployment - emp2.averageEmployment from (Employment join Employment as emp2 on Employment.area = emp2.area and upper(Employment.area) like upper(%s) and Employment.year = %s and emp2.year = %s and Employment.NAICS = %s and emp2.NAICS = %s)", (county_name, start_year, end_year, 0, 0,))
+        cursor.execute("SELECT emp2.averageEmployment - Employment.averageEmployment from (Employment join Employment as emp2 on Employment.area = emp2.area and upper(Employment.area) like upper(%s) and Employment.year = %s and emp2.year = %s and Employment.NAICS = %s and emp2.NAICS = %s)", (county_name, start_year, end_year, 0, 0,))
         records = cursor.fetchone()
         return records
 
