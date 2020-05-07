@@ -6,8 +6,12 @@
 4. See the list of available queries
 5. Type in the corresponding number for the query
 
-## Link to the Video
+## Link 
+### Video
 https://drive.google.com/file/d/1wJH8BR4FZMuekrmKTd7hGCETsgxLmntX/view?usp=sharing
+
+### Github
+https://github.com/gajjas/DatabaseProject
 
 ## Application Queries
 
