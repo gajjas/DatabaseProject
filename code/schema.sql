@@ -12,7 +12,8 @@ IF NOT EXISTS Employment
     Establishments INT,
     averageEmployment INT,
     totalWage BIGINT,
-    annualAverageSalary BIGINT
+    annualAverageSalary BIGINT,
+    PRIMARY KEY (area, year)
 );
 
 CREATE TABLE
@@ -31,5 +32,6 @@ IF NOT EXISTS Population
 	countyCode INT,
 	countyName VARCHAR
 (127),
-	population INT
+	population INT,
+	PRIMARY KEY (countyName, year)
 );
