@@ -22,6 +22,34 @@ def validate_year(string: str, start: int=2000, end: int=2019) -> int:
 
   return int(string)
 
+EMPLOYMENT_COL_NAMES = [
+  "areaType",
+  "area",
+  "NAICS",
+  "NAICSTitle",
+  "year",
+  "Establishments",
+  "averageEmployment",
+  "totalWage",
+  "annualAverageSalary"
+]
+
+POPULATION_COL_NAMES = [
+	"year",
+	"ageGroupCode",
+	"ageGroupDescription",
+	"genderCode",
+	"genderDescription",
+	"raceCode",
+	"raceDescription",
+	"countyCode",
+	"countyName",
+	"population",
+]
+
+def format_cols(rows):
+  return "\n".join((" {:>15.15} " * len(row)).format(*map(str, row)) for row in rows)
+
 # List of queries
 # query is represented by a tuple with the following values
 # (
@@ -66,7 +94,7 @@ options = [
       ('county_name', validate_county),
     ],
     q.getEmploymentByCounty,
-    None
+    lambda result: format_cols([EMPLOYMENT_COL_NAMES] + result)
   ),
   (
     'Find Population by County', 
@@ -74,25 +102,19 @@ options = [
       ('county_name', validate_county),
     ],
     q.getPopulationByCounty,
-    None
+    lambda result: format_cols([POPULATION_COL_NAMES] + result)
   ),
   (
     'Find Highest Employment and Population',
     [],
     q.max,
-    lambda result: f" \
-    Highest population: {result[0]} ({result[2]})\n \
-    Highest average employment: {result[1]} ({result[3]})\n \
-    "
+    lambda result: f" Highest population: {result[0]} ({result[2]})\n Highest average employment: {result[1]} ({result[3]})\n"
   ),
   (
     'Find Lowest Employment and Population',
     [],
     q.min,
-    lambda result: f" \
-    Lowest population: {result[0]} ({result[2]})\n \
-    Lowest average employment: {result[1]} ({result[3]})\n \
-    "
+    lambda result: f" Lowest population: {result[0]} ({result[2]})\n Lowest average employment: {result[1]} ({result[3]})\n"
   )
 ]
 
@@ -152,10 +174,10 @@ def main():
         print(option_output_parser(result))
       # else default output formats
       elif not result:
-        print("No results")
+        print(" No results")
       else:
         for row in result:
-          print(" " * 3, row)
+          print("", row)
       
       print()
 
